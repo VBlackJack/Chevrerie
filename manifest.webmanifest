@@ -1,0 +1,12 @@
+{
+  "name": "Le Mystère de la Chèvrerie",
+  "short_name": "Chèvrerie",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#241c18",
+  "theme_color": "#241c18",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

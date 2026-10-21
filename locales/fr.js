@@ -96,6 +96,9 @@ CH.locales.fr = {
   "ui.the_end": `Fin`,
   "ui.replay": `Rejouer depuis le début`,
   "ui.back_title": `Accueil`,
+  "ui.fullscreen": `Plein écran`,
+  "ui.fullscreen_exit": `Quitter le plein écran`,
+  "ui.fullscreen_rotate": `Plein écran`,
   "ui.rotate": `Tourne ton téléphone : l'enquête se mène à l'horizontale.`,
   "ui.menu_hint": `Tout est sauvegardé automatiquement.`,
 

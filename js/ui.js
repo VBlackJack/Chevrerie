@@ -41,7 +41,7 @@
 
   // ---------------------------------------------------------------- Setup
   function init() {
-    ["stage", "scene", "hotspots", "hud", "act", "objective", "btnNotebook", "btnBoard", "btnMenu", "badge", "nav", "biscotte", "dialog", "catcher", "toasts", "notebook", "board", "screen", "actcard", "paper"].forEach((id) => (el[id] = document.getElementById(id)));
+    ["stage", "scene", "hotspots", "hud", "act", "objective", "btnNotebook", "btnBoard", "btnMenu", "btnFull", "badge", "nav", "biscotte", "dialog", "catcher", "toasts", "notebook", "board", "screen", "actcard", "paper"].forEach((id) => (el[id] = document.getElementById(id)));
     document.getElementById("defs").innerHTML = `<defs>${CH.art.defs()}</defs>`;
     paintTextures();
     el.btnNotebook.addEventListener("click", () => !CH.game.busy && openNotebook({ pick: false }));
@@ -50,13 +50,17 @@
       if (id && !CH.game.busy) openBoard(id);
     });
     el.btnMenu.addEventListener("click", () => !CH.game.busy && showTitle());
+    setupFullscreen();
     el.biscotte.addEventListener("click", () => !CH.game.busy && CH.game.biscotte());
     el.catcher.addEventListener("click", () => advance && advance());
     el.dialog.addEventListener("click", (e) => {
       if (advance && !e.target.closest("button")) advance();
     });
     document.addEventListener("keydown", onKey);
-    document.getElementById("rotate").innerHTML = `<div class="rotate-icon" aria-hidden="true"></div><p>${esc(t("ui.rotate"))}</p>`;
+    const rotate = document.getElementById("rotate");
+    rotate.innerHTML = `<div class="rotate-icon" aria-hidden="true"></div><p>${esc(t("ui.rotate"))}</p>${fullscreenSupported() ? `<button class="rotate-full">${esc(t("ui.fullscreen_rotate"))}</button>` : ""}`;
+    const rotateBtn = rotate.querySelector(".rotate-full");
+    if (rotateBtn) rotateBtn.addEventListener("click", enterFullscreen);
     el.btnNotebook.textContent = t("ui.notebook");
     el.btnMenu.textContent = t("ui.back_title");
     el.biscotte.innerHTML = biscotteSvg();
@@ -66,6 +70,51 @@
     }, C.playtimeTickMs);
     document.title = t("ui.title");
     showTitle();
+  }
+
+  // ---------------------------------------------------------------- Fullscreen
+  const FULL_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const EXIT_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  function fullscreenSupported() {
+    return !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  }
+
+  function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+
+  function enterFullscreen() {
+    const root = document.documentElement;
+    const request = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (!request) return;
+    const result = request.call(root, { navigationUI: "hide" });
+    const lock = () => {
+      // Landscape lock only works in fullscreen, and only on some browsers.
+      if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(() => {});
+    };
+    if (result && result.then) result.then(lock).catch(() => {});
+    else lock();
+  }
+
+  function exitFullscreen() {
+    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (exit) exit.call(document);
+  }
+
+  function updateFullscreenButton() {
+    const on = isFullscreen();
+    el.btnFull.innerHTML = on ? EXIT_ICON : FULL_ICON;
+    el.btnFull.title = t(on ? "ui.fullscreen_exit" : "ui.fullscreen");
+    el.btnFull.setAttribute("aria-label", el.btnFull.title);
+  }
+
+  function setupFullscreen() {
+    if (!fullscreenSupported()) return;
+    el.btnFull.hidden = false;
+    el.btnFull.addEventListener("click", () => (isFullscreen() ? exitFullscreen() : enterFullscreen()));
+    ["fullscreenchange", "webkitfullscreenchange"].forEach((ev) => document.addEventListener(ev, updateFullscreenButton));
+    updateFullscreenButton();
   }
 
   function onKey(e) {
@@ -499,12 +548,15 @@
         <div class="title-actions">
           ${canResume ? `<button class="primary" data-act="resume">${esc(t("ui.continue"))}</button><button data-act="new">${esc(t("ui.restart"))}</button>` : `<button class="primary" data-act="new">${esc(t("ui.start"))}</button>`}
         </div>
+        ${fullscreenSupported() ? `<p class="fullscreen-hint"><button class="link-btn" data-act="fullscreen">${esc(t("ui.fullscreen"))}</button></p>` : ""}
         <p class="dedication">${esc(t("ui.dedication"))}</p>
         ${canResume ? `<p class="muted">${esc(t("ui.menu_hint"))}</p>` : ""}
       </div>`,
       (root) => {
         root.className = "screen title";
         const actions = root.querySelector(".title-actions");
+        const full = root.querySelector('[data-act="fullscreen"]');
+        if (full) full.addEventListener("click", enterFullscreen);
         const bind = () =>
           actions.querySelectorAll("button").forEach((b) =>
             b.addEventListener("click", () => {
