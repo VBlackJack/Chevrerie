@@ -1,0 +1,73 @@
+<!doctype html>
+<!--
+  Copyright 2026 Julien Bombled
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chèvrerie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <svg id="defs" width="0" height="0" style="position:absolute" aria-hidden="true"></svg>
+  <div id="app">
+    <div id="stage">
+      <div id="scene"></div>
+      <div id="paper"></div>
+      <div id="hotspots"></div>
+      <div id="hud" hidden>
+        <div class="hud-left">
+          <div id="act"></div>
+          <div id="objective"></div>
+        </div>
+        <div class="hud-right">
+          <button id="btnBoard" class="hud-btn" hidden></button>
+          <button id="btnNotebook" class="hud-btn"><span id="badge" hidden></span></button>
+          <button id="btnMenu" class="hud-btn"></button>
+        </div>
+      </div>
+      <div id="nav"></div>
+      <div id="biscotte" role="button" tabindex="0" hidden></div>
+      <div id="catcher" hidden></div>
+      <div id="dialog" class="dialog" hidden aria-live="polite"></div>
+      <div id="notebook" class="panel" hidden></div>
+      <div id="board" class="panel" hidden></div>
+      <div id="actcard"></div>
+      <div id="screen" class="screen" hidden></div>
+      <div id="toasts"></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="locales/fr.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/art/kit.js"></script>
+  <script src="js/scenes/registry.js"></script>
+  <script src="js/scenes/house.js"></script>
+  <script src="js/scenes/farm.js"></script>
+  <script src="js/scenes/village.js"></script>
+  <script src="js/data/clues.js"></script>
+  <script src="js/data/deductions.js"></script>
+  <script src="js/data/characters.js"></script>
+  <script src="js/data/goals.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script>CH.ui.init();</script>
+</body>
+</html>
