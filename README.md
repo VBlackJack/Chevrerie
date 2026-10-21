@@ -15,6 +15,11 @@ server. Progress is saved automatically in the browser.
 Playing time: about 45 minutes to 1 hour 15. Fonts load from Google Fonts when online,
 with a serif fallback offline.
 
+## Updating
+
+After any change, bump the `?v=` number on the script and style URLs in `index.html`,
+so browsers download the new files instead of a cached copy.
+
 ## Structure
 
 ```

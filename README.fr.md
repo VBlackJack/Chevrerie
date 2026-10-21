@@ -15,6 +15,12 @@ pas de serveur. La partie est sauvegardée automatiquement dans le navigateur.
 Durée : environ 45 minutes à 1 h 15. Les polices viennent de Google Fonts quand la
 connexion est disponible, avec une police de secours sinon.
 
+## Mise à jour
+
+Après toute modification, incrémenter le numéro `?v=` des scripts et de la feuille de
+style dans `index.html`, pour que les navigateurs téléchargent les nouveaux fichiers au
+lieu d'une copie en cache.
+
 ## Structure
 
 ```
