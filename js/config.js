@@ -27,6 +27,7 @@ CH.config = Object.freeze({
   // Final board feedback thresholds (number of wrong blanks).
   board: { nearMissMax: 2 },
   toastMs: 3200,
+  toastMax: 3,
   playtimeTickMs: 1000,
   textureSeed: 7,
   paperTextureSize: 256,

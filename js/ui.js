@@ -56,6 +56,7 @@
       if (advance && !e.target.closest("button")) advance();
     });
     document.addEventListener("keydown", onKey);
+    document.getElementById("rotate").innerHTML = `<div class="rotate-icon" aria-hidden="true"></div><p>${esc(t("ui.rotate"))}</p>`;
     el.btnNotebook.textContent = t("ui.notebook");
     el.btnMenu.textContent = t("ui.back_title");
     el.biscotte.innerHTML = biscotteSvg();
@@ -214,6 +215,12 @@
     });
   }
 
+  function objectiveKey(s) {
+    if (s.act === C.acts.disappearance && s.flags.cloth) return "obj.1b";
+    if (currentBoard()) return `obj.${s.act}b`;
+    return `obj.${s.act}`;
+  }
+
   function currentBoard() {
     return ["b1", "b2"].find((b) => CH.game.boardReady(b)) || null;
   }
@@ -224,7 +231,7 @@
     renderScene(false);
     renderNav();
     el.act.textContent = t(`ui.act_${s.act}`);
-    el.objective.textContent = t(`obj.${s.act}`);
+    el.objective.textContent = t(objectiveKey(s));
     const freshCount = Object.keys(s.fresh).length;
     el.badge.textContent = freshCount;
     el.badge.hidden = freshCount === 0;
@@ -310,6 +317,7 @@
     n.className = "toast " + (kind || "");
     n.textContent = text;
     el.toasts.appendChild(n);
+    while (el.toasts.children.length > C.toastMax) el.toasts.firstElementChild.remove();
     setTimeout(() => n.classList.add("out"), C.toastMs);
     setTimeout(() => n.remove(), C.toastMs + 600);
   }

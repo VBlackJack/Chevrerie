@@ -103,7 +103,7 @@
       },
     },
     veto: {
-      presence: (s) => (s.act >= 2 && s.act <= 3 ? { scene: "cour", x: 1220, y: 880, h: 430 } : null),
+      presence: (s) => (s.act >= 2 && s.act <= 3 ? { scene: "cour", x: 1390, y: 890, h: 430 } : null),
       topics: [T("veto", "visite", [{ clue: "carnet_veto" }]), T("veto", "blanchette")],
       show: {
         trousse: SHOW("veto", "trousse"),
