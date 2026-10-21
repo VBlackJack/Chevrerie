@@ -93,6 +93,8 @@
       back += `<circle cx="940" cy="450" r="9" fill="${P.ochre}" stroke="${P.ink}" stroke-width="2"/>`;
       // Suitcase and sandals
       back += sh(rect(880, 700, 180, 100, 3), P.teal) + sh(rect(940, 682, 60, 22, 2), "none", { sw: 4 }) + ink(line(880, 750, 1060, 750, 1), 2, { op: 0.6 });
+      // LEGO minifigure standing guard on the suitcase
+      back += sh(rect(1030, 680, 22, 20, 0.6), "#f2f2f0", { sw: 1.6 }) + sh(rect(1032, 664, 18, 16, 0.6), "#f2f2f0", { sw: 1.6 }) + `<rect x="1035" y="669" width="12" height="4" fill="${P.ink}"/>` + sh(rect(1030, 700, 10, 6, 0.4), "#2a2a2a", { sw: 1.2 }) + sh(rect(1042, 700, 10, 6, 0.4), "#2a2a2a", { sw: 1.2 });
       back += sh(blob(290, 812, 30, 12, 0.06, 9), P.ink) + sh(blob(360, 820, 30, 12, 0.06, 9), P.ink);
       back += ink(line(272, 806, 308, 806, 0.5), 5, { stroke: "#1c1a19" }) + ink(line(342, 814, 378, 814, 0.5), 5, { stroke: "#1c1a19" });
       // Armchair with the fleece throw
@@ -118,7 +120,8 @@
       { id: "fenetre", x: 1060, y: 140, w: 320, h: 340, look: [L("hs.chambre.fenetre.look")], pro: { steps: [L("hs.chambre.fenetre.pro")] } },
       { id: "fauteuil", x: 1180, y: 520, w: 250, h: 240, look: [L("hs.chambre.fauteuil.look"), { egg: "plaidChambre" }] },
       { id: "sandales", x: 250, y: 790, w: 160, h: 50, look: [L("hs.chambre.sandales.look"), { egg: "sandales" }] },
-      { id: "valise", x: 880, y: 680, w: 180, h: 120, look: [L("hs.chambre.valise.look")] },
+      { id: "valise", x: 880, y: 690, w: 130, h: 110, look: [L("hs.chambre.valise.look")] },
+      { id: "lego", x: 1010, y: 640, w: 60, h: 70, look: [L("hs.chambre.lego.look"), { egg: "lego" }] },
       { id: "gravure", x: 220, y: 120, w: 180, h: 140, look: [L("hs.chambre.gravure.look")], pro: { steps: [L("hs.chambre.gravure.pro")] } },
       {
         id: "porte", x: 800, y: 230, w: 160, h: 410,
@@ -239,7 +242,7 @@
         look: (s) => (item(s, "cuillere") || flag(s, "stash") ? [L("hs.cuisine.tiroir.empty")] : [L("hs.cuisine.tiroir.look"), { item: "cuillere" }]),
       },
       { id: "bottes", x: 1290, y: 630, w: 140, h: 104, look: [L("hs.cuisine.bottes.look"), { egg: "bottesFleurs" }], pro: { steps: [L("hs.cuisine.bottes.pro"), { clue: "bottes" }] } },
-      { id: "mocassins", x: 1436, y: 730, w: 140, h: 54, look: [L("hs.cuisine.mocassins.look"), { clue: "mocassins" }] },
+      { id: "mocassins", x: 1436, y: 730, w: 140, h: 54, look: [L("hs.cuisine.mocassins.look"), { if: (s) => s.act === 1, then: [L("hs.cuisine.mocassins.family")] }, { clue: "mocassins" }] },
       { id: "poubelle", x: 596, y: 700, w: 82, h: 104, look: (s) => (s.act >= 2 && !has(s, "contrat_3") ? [L("hs.cuisine.poubelle.look"), { clue: "contrat_3" }] : [L("hs.cuisine.poubelle.empty")]) },
       { id: "certificat", x: 796, y: 524, w: 84, h: 34, when: (s) => s.act >= 2, look: [L("hs.cuisine.certificat.look"), { clue: "certificat" }] },
       { id: "tablier", x: 1520, y: 240, w: 76, h: 190, look: [L("hs.cuisine.tablier.look")] },

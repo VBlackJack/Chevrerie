@@ -68,7 +68,7 @@
   }
 
   const LIST = [
-    "crochet", "collier", "plaquette", "traces_gaston", "echarpe", "photos", "julien_toit",
+    "crochet", "collier", "plaquette", "traces_gaston", "b_traces", "benjamin_nuit", "echarpe", "photos", "julien_toit",
     "cahier_gaston", "recette", "gerard_aveu", "belote", "mocassins", "appel",
     "contrat_1", "contrat_2", "contrat_3", "contrat", "liste", "lettre",
     "carnet_veto", "trousse", "certificat", "four", "calendrier",

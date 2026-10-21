@@ -23,7 +23,7 @@
     "plaidChambre", "sandales", "bouquet", "ambre", "bottesFleurs", "polaireTricot", "agnetha", "puits",
     "boue", "statique", "fiches", "ipv6", "yoga", "radio", "radioRetour", "chat", "boule", "jeudiDisco",
     "sandalesBoue", "plaidOdeur", "statiquePlaid", "carotte", "wifi", "verresVeto", "lunettesGerard",
-    "activeDirectory", "chiffon",
+    "activeDirectory", "chiffon", "lego",
   ];
 
   // Answer index for each blank, in locale option order.

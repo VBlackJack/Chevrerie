@@ -191,6 +191,9 @@
     s += sh(blob(-26, -343, 8, 5, 0.1, 8), c.blush || P.pink, { sw: 0, op: 0.45 });
     s += sh(blob(26, -343, 8, 5, 0.1, 8), c.blush || P.pink, { sw: 0, op: 0.45 });
     if (c.mole) s += `<circle cx="9" cy="-318" r="2" fill="${P.inkSoft}"/>`;
+    if (c.freckles) {
+      [[-30, -350], [-24, -346], [-34, -344], [-20, -351], [-28, -340], [30, -350], [24, -346], [34, -344], [20, -351], [28, -340], [-4, -350], [5, -349]].forEach(([x, y]) => (s += `<circle cx="${x}" cy="${y}" r="1.4" fill="#a8603e" opacity=".75"/>`));
+    }
     return s;
   }
 
@@ -252,6 +255,21 @@
           sh(soft([[-46, -370], [-38, -404], [0, -416], [38, -404], [46, -370], [30, -392], [-4, -396], [-30, -388]], 1.5), h) +
           sh(soft([[48, -352], [64, -300], [60, -240], [50, -238], [48, -300], [40, -344]], 1.5), h) +
           ink(curve([[50, -320], [60, -316]], 0.3), 1.5) + ink(curve([[52, -294], [62, -290]], 0.3), 1.5) + ink(curve([[52, -268], [60, -264]], 0.3), 1.5)
+        );
+      case "tuft":
+        // Short cut, sides trimmed, front lifted and swept to the side.
+        return (
+          sh(soft([[-46, -366], [-46, -392], [-30, -412], [0, -420], [26, -418], [46, -402], [48, -376], [40, -390], [30, -400], [10, -404], [-6, -398], [-22, -394], [-36, -384]], 1.2), h) +
+          sh(soft([[-6, -400], [10, -428], [34, -426], [46, -408], [26, -406]], 1.2), h) +
+          ink(curve([[2, -414], [18, -420], [34, -416]], 0.4), 1.4, { stroke: "#5a3a26", op: 0.6 })
+        );
+      case "fade":
+        // Very short sides, darker lifted crest on top.
+        return (
+          sh(soft([[-46, -360], [-44, -384], [-36, -376], [-40, -356]], 0.8), h, { op: 0.55 }) +
+          sh(soft([[46, -360], [44, -384], [36, -376], [40, -356]], 0.8), h, { op: 0.55 }) +
+          sh(soft([[-34, -398], [-22, -414], [0, -424], [20, -428], [36, -416], [40, -400], [24, -404], [6, -408], [-14, -404]], 1.2), h) +
+          ink(curve([[-6, -416], [6, -432], [16, -426]], 0.6), 2, { stroke: h }) + ink(curve([[10, -418], [24, -434], [30, -424]], 0.6), 2, { stroke: h })
         );
       case "bald":
         return sh(soft([[-46, -360], [-44, -380], [-38, -372]], 1), h) + sh(soft([[46, -360], [44, -380], [38, -372]], 1), h);
@@ -321,6 +339,10 @@
       s += sh(soft([[-56, -302], [56, -302], [54, -230], [50, -160], [-50, -160], [-54, -230]], 2), c.top);
     }
     if (c.vneck) s += sh(soft([[-16, -302], [0, -272], [16, -302]], 0.5), c.skin, { sw: 2 });
+    if (c.sunPrint) {
+      s += `<g stroke="#b9c3d6" stroke-width="2" fill="none" opacity=".8"><circle cx="-24" cy="-206" r="8"/>${[0, 45, 90, 135, 180, 225, 270, 315].map((a) => { const r = (a * Math.PI) / 180; return `<path d="M${(-24 + Math.cos(r) * 11).toFixed(1)} ${(-206 + Math.sin(r) * 11).toFixed(1)}L${(-24 + Math.cos(r) * 16).toFixed(1)} ${(-206 + Math.sin(r) * 16).toFixed(1)}"/>`; }).join("")}<path d="M-4 -196h34v26h-34zM6 -190l10 10l10 -12"/></g>`;
+    }
+    if (c.logo) s += sh(blob(0, -236, 22, 16, 0.08, 10), "#f2efe8", { sw: 2 }) + `<path d="M-12 -236a12 8 0 0 1 24 0" fill="none" stroke="#e98a4a" stroke-width="4"/><path d="M-8 -232a8 5 0 0 1 16 0" fill="none" stroke="#5aa0d8" stroke-width="3.5"/>`;
     if (c.pocket) s += sh(rect(16, -262, 24, 22, 1), c.top, { sw: 2 });
     if (c.gilet) s += sh(soft([[-56, -300], [-14, -300], [-10, -164], [-50, -162]], 1.5), c.gilet) + sh(soft([[14, -300], [56, -300], [50, -162], [10, -164]], 1.5), c.gilet) + ink(curve([[-40, -260], [-16, -258]], 0.5), 1.5, { op: 0.6 }) + ink(curve([[16, -258], [40, -260]], 0.5), 1.5, { op: 0.6 }) + ink(curve([[-42, -220], [-14, -218]], 0.5), 1.5, { op: 0.6 }) + ink(curve([[14, -218], [42, -220]], 0.5), 1.5, { op: 0.6 });
     if (c.cardigan) s += sh(soft([[-56, -300], [-18, -298], [-12, -166], [-50, -162]], 1.5), c.cardigan) + sh(soft([[18, -298], [56, -300], [50, -162], [12, -166]], 1.5), c.cardigan);
@@ -350,6 +372,13 @@
     s += sh(blob(-44, -358, 8, 11, 0.08, 8), c.skin, { sw: 2.5 }) + sh(blob(44, -358, 8, 11, 0.08, 8), c.skin, { sw: 2.5 });
     s += sh(soft([[-44, -372], [-40, -398], [-20, -412], [20, -412], [40, -398], [44, -372], [42, -340], [26, -316], [0, -310], [-26, -316], [-42, -340]], 1.2), c.skin);
     s += face(c);
+    if (c.longBeard) {
+      s += sh(soft([[-42, -352], [-40, -320], [-26, -290], [0, -272], [26, -290], [40, -320], [42, -352], [30, -336], [14, -324], [-14, -324], [-30, -336]], 1.6), c.longBeard);
+      for (let i = 0; i < 9; i++) s += ink(curve([[-26 + i * 6.5, -332], [-28 + i * 7, -306], [-22 + i * 5.5, -286]], 0.8), 1.3, { stroke: "#f4f1ea", op: 0.55 });
+      s += sh(soft([[-20, -338], [0, -344], [20, -338], [12, -333], [0, -337], [-12, -333]], 0.8), c.mustache || c.longBeard);
+      s += ink(curve([[-8, -330], [0, -327], [8, -330]], 0.3), 2.4, { stroke: "#6b3b33" });
+    }
+    if (c.earbuds) s += `<circle cx="-46" cy="-356" r="5" fill="#2a2a2c" stroke="${P.ink}" stroke-width="1.5"/><circle cx="46" cy="-356" r="5" fill="#2a2a2c" stroke="${P.ink}" stroke-width="1.5"/>`;
     if (c.beard) s += sh(soft([[-42, -352], [-30, -320], [0, -306], [30, -320], [42, -352], [30, -336], [12, -322], [-12, -322], [-30, -336]], 1.2), c.beard) + ink(curve([[-8, -330], [0, -327], [8, -330]], 0.3), 2.4, { stroke: "#6b3b33" });
     if (c.mustache) s += sh(soft([[-20, -336], [0, -342], [20, -336], [12, -332], [0, -336], [-12, -332]], 0.8), c.mustache);
     s += hairFront(c);
@@ -446,10 +475,11 @@
     veronique: { skin: "#ecbfa6", hair: "#5a3b2a", hairStyle: "bob", top: "#7f7c79", pants: "#232121", sandals: true, cuffs: true, vneck: true, pocket: true, necklace: true, watch: "#d9a5a0", mole: true, poseL: "pocket", poseR: "pocket", glasses: { color: "#22403c", thick: true }, seed: 101 },
     mireille: { skin: "#eabba0", hair: "#b9b4ab", hairStyle: "bun", top: "#e8dcc4", cardigan: "#c9a03f", skirt: "#6d5a4a", legs: "#c9b9a6", boots: null, apron: "#efe1c0", shoes: "#4a3a30", seed: 111 },
     thibault: { skin: "#e3b493", hair: "#4a3326", hairStyle: "swept", top: "#e7e2d8", gilet: "#2f3f5a", pants: "#5e6a7a", shoes: "#a8784a", beard: "#4a3326", poseR: "up", phone: true, seed: 121 },
-    julien: { skin: "#e6b596", hair: "#3e2d22", hairStyle: "short", top: "#6e7a68", hoodie: true, pants: "#3a3f48", shoes: "#d9d4c8", beard: "#3e2d22", lanyard: true, seed: 131 },
+    julien: { skin: "#e3b096", hair: "#3a2a22", hairStyle: "fade", top: "#2e3a5c", sunPrint: true, pants: "#3a3f48", shoes: "#d9d4c8", longBeard: "#b4b0aa", mustache: "#6e665e", earbuds: true, glasses: { color: "#1f2328" }, seed: 131 },
     capucine: { skin: "#f0c7aa", hair: "#b35a2e", hairStyle: "braid", top: "#f3efe6", pants: "#5b6470", apron: "#f6f3ec", shoes: "#3a6d6a", charlotte: true, seed: 141 },
     veto: { skin: "#dcae8e", hair: "#9a958c", hairStyle: "short", top: "#59603f", coatLong: true, pants: "#3a3a36", shoes: "#4a3a30", stetho: true, glasses: { color: "#5a5a5a", scratched: true }, seed: 151 },
     gerard: { skin: "#d9a184", hair: "#6c6258", hairStyle: "short", top: "#8a3d36", pants: "#4a4f44", shoes: "#3a2f28", cap: "#5b5a48", mustache: "#6c6258", glasses: { color: "#7d7d78", crooked: true, tape: true }, seed: 161 },
+    benjamin: { skin: "#f2c6ad", hair: "#8a5a38", hairStyle: "tuft", top: "#23211f", logo: true, pants: "#4b5a6e", shoes: "#e8e2d6", freckles: true, blush: "#e78f80", seed: 181 },
     momo: { skin: "#d6a284", hair: "#5a4a3f", hairStyle: "bald", top: "#e9e3d6", apron: "#3b3330", pants: "#3b3330", mustache: "#4a3b32", towel: true, seed: 171 },
   };
 

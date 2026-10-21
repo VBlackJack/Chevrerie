@@ -18,14 +18,14 @@
 // Text lives in ded.<id>.title / ded.<id>.text.
 (function () {
   const DEDUCTIONS = [
-    { id: "evasion", pairs: [["crochet", "collier"]], board: "b1" },
+    { id: "evasion", pairs: [["crochet", "collier"], ["crochet", "benjamin_nuit"]], board: "b1" },
     { id: "gaston", pairs: [["cahier_gaston", "traces_gaston"]], board: "b1" },
     { id: "heure", pairs: [["photos", "carnet_veto"], ["photos", "appel"]], board: "b2", cut: "clockReveal" },
     { id: "julien", pairs: [["photos", "julien_toit"]] },
     { id: "gerard", pairs: [["gerard_aveu", "belote"]], board: "b2", requires: ["heure"], failKey: "combo.need.heure_gerard" },
     { id: "capucine", pairs: [["liste", "lettre"]] },
     { id: "thibault", pairs: [["contrat", "dispute"]], board: "b2" },
-    { id: "nuit", pairs: [["empreintes", "pluie"]], board: "b2" },
+    { id: "nuit", pairs: [["empreintes", "pluie"], ["empreintes", "benjamin_nuit"]], board: "b2" },
     { id: "mireille", pairs: [["empreintes", "bottes"], ["terre", "bottes"]], board: "b2" },
     { id: "plaid", pairs: [["plaid", "violette"]], board: "b2" },
     { id: "lieu", pairs: [["plaid", "plan"], ["luzerne", "plan"]], board: "b2" },
@@ -39,7 +39,7 @@
     ["calendrier", "photos"], ["belote", "photos"], ["tricot", "bottes"], ["crochet", "cahier_gaston"],
     ["recette", "luzerne"], ["violette", "bottes"], ["plaquette", "echarpe"], ["appel", "mocassins"],
     ["page_veto", "contrat"], ["trousse", "carnet_veto"], ["lettre", "echarpe"], ["julien_toit", "crochet"],
-    ["four", "calendrier"], ["plaid", "luzerne"], ["collier", "plaquette"], ["mireille_nuit", "bottes"],
+    ["four", "calendrier"], ["plaid", "luzerne"], ["benjamin_nuit", "photos"], ["b_traces", "cahier_gaston"], ["collier", "plaquette"], ["mireille_nuit", "bottes"],
   ];
   const GENERIC_COUNT = 10;
 

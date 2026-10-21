@@ -251,11 +251,9 @@
   function speakerInfo(who) {
     if (who === "n") return { name: "", portrait: "", cls: "narration" };
     if (who === "b") return { name: t("chr.biscotte.name"), portrait: CH.art.goatPortrait("biscotte"), cls: "biscotte" };
-    if (who === "v" || who.startsWith("v.")) {
-      const expr = who.split(".")[1] || "neutral";
-      return { name: t("chr.veronique.name"), portrait: CH.art.portrait("veronique", expr), cls: "veronique" };
-    }
-    return { name: t(`chr.${who}.name`), portrait: CH.art.portrait(who), cls: "character" };
+    const [id, expr] = who.split(".");
+    if (id === "v") return { name: t("chr.veronique.name"), portrait: CH.art.portrait("veronique", expr || "neutral"), cls: "veronique" };
+    return { name: t(`chr.${id}.name`), portrait: CH.art.portrait(id, expr), cls: "character" };
   }
 
   function fillDialog(who, html, opts) {

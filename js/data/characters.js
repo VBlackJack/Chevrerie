@@ -132,6 +132,30 @@
       },
       pro: [L("dlg.gerard.pro"), { flag: "gerardPro" }],
     },
+    benjamin: {
+      presence: (s) => {
+        if (s.act === 1) return { scene: "cuisine", x: 830, y: 790, h: 370 };
+        if (s.act === 2) return { scene: "enclos", x: 1470, y: 885, h: 360 };
+        if (s.act === 3) return { scene: "chemin", x: 590, y: 890, h: 370 };
+        return null;
+      },
+      topics: [
+        T("benjamin", "gaston"),
+        T("benjamin", "nuit", [{ clue: "benjamin_nuit" }, { clue: "pluie" }]),
+        T("benjamin", "traces", [{ clue: "b_traces" }], (s) => s.act >= 2),
+        T("benjamin", "interieur", [], (s) => s.act >= 2),
+        T("benjamin", "lierre", [], (s) => s.act >= 3),
+      ],
+      show: {
+        collier: SHOW("benjamin", "collier"),
+        tricot: SHOW("benjamin", "tricot"),
+        page_veto: SHOW("benjamin", "page_veto"),
+        plaid: SHOW("benjamin", "plaid"),
+        photos: SHOW("benjamin", "photos"),
+        traces_gaston: SHOW("benjamin", "traces_gaston"),
+        empreintes: SHOW("benjamin", "empreintes"),
+      },
+    },
     momo: {
       presence: (s) => (s.act >= 2 && s.act <= 3 ? { scene: "cafe", x: 1280, y: 800, h: 420 } : null),
       topics: [T("momo", "tournoi", [{ clue: "belote" }]), T("momo", "meteo", [{ clue: "pluie" }]), T("momo", "boule", [{ egg: "jeudiDisco" }])],
