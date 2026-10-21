@@ -69,6 +69,8 @@
 
   let s = null;
   let busy = false;
+  // Incremented on every (re)start: scripts from a previous game stop running.
+  let epoch = 0;
 
   function fresh() {
     return {
@@ -158,7 +160,11 @@
   async function run(steps) {
     if (!steps) return;
     if (typeof steps === "function") steps = steps(s);
-    for (const st of steps) await exec(st);
+    const started = epoch;
+    for (const st of steps) {
+      if (started !== epoch) return;
+      await exec(st);
+    }
   }
 
   async function exec(st) {
@@ -186,11 +192,13 @@
   async function action(fn) {
     if (busy) return;
     busy = true;
+    const started = epoch;
     CH.ui.setBusy(true);
     try {
       await fn();
-      await progress();
+      if (started === epoch) await progress();
     } finally {
+      if (started !== epoch) return;
       busy = false;
       CH.ui.setBusy(false);
       CH.ui.closeDialog();
@@ -387,6 +395,8 @@
 
   // ---------------------------------------------------------------- Lifecycle
   function start(resume) {
+    epoch++;
+    busy = false;
     s = (resume && loadSaved()) || fresh();
     if (s.act === C.acts.ending && !s.flags.finished) {
       // A save made mid-ending resumes just before the final board.

@@ -472,6 +472,7 @@
   }
 
   function showTitle() {
+    el.actcard.classList.remove("show");
     backdrop = "title";
     lastSceneKey = "";
     const sc = CH.scenes.get("title").draw();
@@ -495,17 +496,40 @@
       </div>`,
       (root) => {
         root.className = "screen title";
-        root.querySelectorAll("button").forEach((b) =>
-          b.addEventListener("click", () => {
-            if (b.dataset.act === "new" && canResume && !window.confirm(t("ui.restart_confirm"))) return;
-            CH.game.start(b.dataset.act === "resume");
-          })
-        );
+        const actions = root.querySelector(".title-actions");
+        const bind = () =>
+          actions.querySelectorAll("button").forEach((b) =>
+            b.addEventListener("click", () => {
+              const act = b.dataset.act;
+              if (act === "new" && canResume) return askRestart();
+              if (act === "cancel") return showTitle();
+              CH.game.start(act === "resume");
+            })
+          );
+        // In-page confirmation: browser dialogs can be blocked in embedded views.
+        const askRestart = () => {
+          actions.innerHTML = `<p class="confirm-text">${esc(t("ui.restart_confirm"))}</p><button class="primary" data-act="confirmNew">${esc(t("ui.yes"))}</button><button data-act="cancel">${esc(t("ui.no"))}</button>`;
+          bind();
+        };
+        bind();
       }
     );
   }
 
+  // Forget any dialogue, menu or panel left open by a previous game.
+  function resetOverlays() {
+    advance = null;
+    menuResolve = null;
+    notebookState = null;
+    boardState = null;
+    el.notebook.hidden = true;
+    el.board.hidden = true;
+    closeDialog();
+    setBusy(false);
+  }
+
   function enterGame() {
+    resetOverlays();
     hideScreen();
     backdrop = null;
     lastSceneKey = "";

@@ -436,7 +436,8 @@ button {
 .title-card h1 { font-family: var(--font-hand); font-size: 5.4cqw; margin: 0; line-height: 0.95; color: var(--ink); }
 .subtitle { font-family: var(--font-hand); font-size: 2.4cqw; color: var(--rust); margin: 0.4cqw 0 1cqw; }
 .tagline { font-style: italic; line-height: 1.45; margin: 0 0 1.6cqw; }
-.title-actions { display: flex; gap: 0.8cqw; flex-wrap: wrap; }
+.title-actions { display: flex; gap: 0.8cqw; flex-wrap: wrap; align-items: center; }
+.confirm-text { flex-basis: 100%; margin: 0 0 0.4cqw; font-style: italic; color: var(--rust); }
 .screen .primary { background: #f6d79b; font-family: var(--font-hand); font-size: 2cqw; }
 .dedication { font-family: var(--font-hand); font-size: 1.8cqw; color: var(--teal); margin: 1.4cqw 0 0; }
 
