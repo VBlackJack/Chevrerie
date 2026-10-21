@@ -433,7 +433,9 @@
     const hy = graze ? by + c.ry + 10 : by - c.ry - 40;
     s += sh(soft([[nx - 26, ny - 6], [nx + 6, ny - 22], [hx - 8, hy - 8], [hx + 6, hy + 10], [nx + 22, ny + 18]], 1.2), c.coat);
     if (c.collar) s += ink(line(nx - 4, ny - 18, nx + 16, ny + 4, 0.5), 7, { stroke: c.collar });
-    s += g(head(c), `class="g-head" transform="translate(${f(hx)},${f(hy)}) scale(${c.hs}) rotate(${graze ? 50 : 0})"`);
+    // The outer group places the head; the inner one is free for CSS animation,
+    // which would otherwise replace the placement transform.
+    s += g(g(head(c), 'class="g-head"'), `transform="translate(${f(hx)},${f(hy)}) scale(${c.hs}) rotate(${graze ? 50 : 0})"`);
     return s;
   }
 
