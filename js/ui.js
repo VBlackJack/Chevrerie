@@ -285,6 +285,12 @@
     el.badge.textContent = freshCount;
     el.badge.hidden = freshCount === 0;
     el.btnNotebook.appendChild(el.badge);
+    const needsHelp = !s.seen["help:combine"] && s.clueOrder.length >= C.helpMinClues;
+    el.btnNotebook.classList.toggle("nudge", needsHelp);
+    if (needsHelp && !s.seen["help:nudge"]) {
+      s.seen["help:nudge"] = true;
+      toast(t("ui.combine_nudge"));
+    }
     const b = currentBoard();
     el.btnBoard.hidden = !b;
     if (b) el.btnBoard.textContent = t(`ui.board_btn_${b}`);
@@ -424,6 +430,7 @@
       const ids = Object.keys(s.items);
       cards = ids.length ? ids.map((id) => cardHtml("item", id, t(`item.${id}.name`), t(`item.${id}.text`))).join("") : `<p class="empty">${esc(t("ui.empty_items"))}</p>`;
     }
+    const showHelp = !st.pick && st.tab === "clues" && !s.seen["help:combine"] && s.clueOrder.length >= C.helpMinClues;
     let tip = st.pick ? t("ui.pick_tip") : st.tab === "clues" ? (st.selected ? t("ui.combine_selected", { title: t(`clue.${st.selected}.title`) }) : t("ui.combine_tip")) : "";
     const board = currentBoard();
     el.notebook.innerHTML = `
@@ -433,6 +440,7 @@
           <nav class="tabs">${tabs.map((k) => `<button class="tab${k === st.tab ? " active" : ""}" data-tab="${k}">${esc(t(tabLabel[k]))}</button>`).join("")}</nav>
           <button class="close">${esc(st.pick ? t("ui.cancel") : t("ui.close"))}</button>
         </header>
+        ${showHelp ? `<div class="help-box"><strong>${esc(t("ui.combine_help_title"))}</strong><p>${esc(t("ui.combine_help"))}</p></div>` : ""}
         ${tip ? `<p class="tip">${esc(tip)}</p>` : ""}
         <div class="cards">${cards}</div>
         ${!st.pick && board ? `<footer><button class="board-open">${esc(t(`ui.board_btn_${board}`))}</button></footer>` : ""}

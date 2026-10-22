@@ -358,6 +358,9 @@ button {
 .tab { background: transparent !important; box-shadow: none !important; border-style: dashed !important; }
 .tab.active { background: var(--ink) !important; color: var(--paper); border-style: solid !important; }
 .panel .close { margin-left: auto; }
+.help-box { margin: 0.6cqw 0; padding: 0.8cqw 1.2cqw; border: 0.2cqw dashed var(--ochre); border-radius: 0.8cqw; background: rgba(246, 215, 155, 0.35); }
+.help-box p { margin: 0.3cqw 0 0; }
+#btnNotebook.nudge { background: #f6d79b; animation: glow 2.2s ease-in-out infinite; }
 .tip { margin: 0.6cqw 0; color: var(--ink-soft); font-style: italic; }
 .cards {
   flex: 1;
@@ -519,7 +522,7 @@ button {
 @keyframes actcard { 0% { opacity: 0; transform: translate(-50%, -40%); } 18%, 75% { opacity: 1; transform: translate(-50%, -50%); } 100% { opacity: 0; transform: translate(-50%, -58%); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .anim *, #biscotte *, .pulse, #btnBoard { animation: none !important; }
+  .anim *, #biscotte *, .pulse, #btnBoard, #btnNotebook.nudge { animation: none !important; }
 }
 
 #rotate { display: none; }

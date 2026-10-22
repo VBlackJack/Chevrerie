@@ -278,6 +278,7 @@
 
   function combine(a, b) {
     return action(async () => {
+      s.seen["help:combine"] = true;
       const d = CH.deductions.match(a, b);
       if (d) {
         if (s.deds[d.id]) return run([{ l: "combo.already" }]);

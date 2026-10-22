@@ -28,6 +28,7 @@ CH.config = Object.freeze({
   board: { nearMissMax: 2 },
   toastMs: 3200,
   toastMax: 3,
+  helpMinClues: 2,
   playtimeTickMs: 1000,
   textureSeed: 7,
   paperTextureSize: 256,
